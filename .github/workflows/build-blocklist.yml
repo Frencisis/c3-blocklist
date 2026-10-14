@@ -1,5 +1,7 @@
 name: build-blocklist
 on:
+  push:
+    branches: [ master ]      # esegue a ogni push (e quindi subito ora)
   schedule:
     - cron: "0 4 * * *"      # ogni giorno alle 04:00 UTC
   workflow_dispatch:          # + pulsante "Run" manuale
