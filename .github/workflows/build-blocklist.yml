@@ -15,10 +15,11 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Build blocklist.bin (Hagezi Multi)
+      - name: Build blocklist.bin (StevenBlack + Hagezi Multi, ~205k domains)
         run: >
           python build_blocklist.py blocklist.bin
-          https://raw.githubusercontent.com/hagezi/dns-blocklists/main/dnsmasq/multi.txt
+          https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts
+          https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/multi.txt
       - name: Publish as 'latest' release
         uses: softprops/action-gh-release@v2
         with:
