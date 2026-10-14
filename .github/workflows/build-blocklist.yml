@@ -1,0 +1,24 @@
+name: build-blocklist
+on:
+  schedule:
+    - cron: "0 4 * * *"      # ogni giorno alle 04:00 UTC
+  workflow_dispatch:          # + pulsante "Run" manuale
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Build blocklist.bin (Hagezi Multi)
+        run: >
+          python build_blocklist.py blocklist.bin
+          https://raw.githubusercontent.com/hagezi/dns-blocklists/main/dnsmasq/multi.txt
+      - name: Publish as 'latest' release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          files: blocklist.bin
